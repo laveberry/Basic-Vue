@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초 익히기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    .red{
+        color: red;
+    }
+    .font-bold{
+        font-weight: bold;
+    }
+</style>
+<body>
+    <div id="app">
+        {{person.name}} {{person.age}}
+        {{nextYear('안녕하세요')}}
+        <!-- type값을 type으로 지정하고 바인딩 처리 -->
+        <input :type="type" v-bind:value="inputData">
+        <!-- <a :href="link">김달해</a> -->
+        <a :href="getMoonSunLink(search)">김달해</a>
+;
+        <button v-on:click="alert">Click</button> <br/>
+        {{year}} <br/>
+        <button v-on:click="plus">더하기</button> <br/>
+        <button v-on:click="minus">빼기</button> <br/>
+
+        <!-- .이벤트핸들링-수식어 로 기능추가 -->
+        <form v-on:submit.prevent="submit">
+            <!-- 이벤트 v-on: 은 @로 대체가능 -->
+            <!-- 1단계 -->
+            <input type="text" :value="text" @keyup="updateText"><br/>
+            <!-- 2단계(축소버전) : 양방향 바인딩 -->
+            <input type="text" v-model="text"><br/>
+
+            {{text}}<br/>
+            <button type="submit">Submit</button>
+        </form>
+
+        <button @click="changeMessage">글자바꾸기</button> <br/>
+        {{ number+1 }} <br/>
+        {{ message.split('').reverse().join('') }} <br/>
+        <!-- ()없이 computed 호출, 한번 생성된 후 값 저장(캐싱)되어 있음 -->
+        {{ reverseMessage }} <br/>
+        {{ reverseMessage }} <br/> 
+        {{ reverseMessage() }} <br/>
+        
+        <div class="red bold">Hello</div>
+        <!-- ,를 사용하여 2개 적용, -있는경우 문자화 -->
+        <div :class="{ red: isRed, 'font-bold': isBold }">Hello</div>
+        <button @click="update">글자색 바꾸기</button>
+        <!-- 왜 red로 안바뀌지 ? -->
+        <div :style="{ color: red, fontSize: size }">hihi</div>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                person:{
+                    name: '달해',
+                    age: 25,
+                },
+                inputData: 'hello',
+                type: 'number',
+                link: 'https://www.naver.com',
+                year: 2021,
+                text: 'text',
+                number: 1,
+                message: '안녕하세요',
+                isRed: false,
+                isBold: false,
+
+                size: '30px',
+            },
+            methods: {
+                getMoonSunLink(channel){
+                    return this.link + '/' + channel; 
+                },
+                nextYear(greeting){ //function을 제거해도 작동
+                    return greeting+ ' !' + this.person.name + ' 는 내년에 '+(this.person.age +1) + '살 입니다.';
+                },
+                otherMethod: function(){
+                    this.nextYear(); //이 함수안에서 함수사용
+                },
+                alert(){
+                    alert('안녕 달해')
+                },
+                plus(){
+                    this.year++;
+                },
+                minus(){
+                    this.year--;
+                },
+                submit(){
+                    alert('submitted');
+                    console.log('hi');
+                },
+                updateText(event){
+                    console.log(event);
+                    this.text = event.target.value;
+                },
+                reverseMessage(){
+                    return this.message.split('').reverse().join('')
+                },
+                changeMessage(){
+                    this.message = "달해하이루"
+                },
+                update(){
+                    this.isRed = ! this.isRed;
+                    this.isBold = !this.isBold;
+                }
+            },
+            computed: {  //()없이 호출가능
+                reverseMessage(){
+                    return this.message.split('').reverse().join ('')
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
