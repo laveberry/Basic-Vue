@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초익히기 : component</title>
+    <style>
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ name }} <br>
+        <!-- 직접입력 -->
+        <button @click="changeText">Click</button>
+
+        <hr>
+        <!-- 컴포넌트형 -->
+        <moonsun-button></moonsun-button>
+    </div>
+
+    <hr><hr>
+
+    <div id="app-1"> 
+        <!-- {{ name }} <br>
+        <button @click="changeText">Click</button> -->
+
+        <hr>
+
+        <moonsun-button></moonsun-button>
+
+    </div>
+    
+    <script>
+        //전역 컴포넌트
+        // Vue.component('hello-world',{
+        //     template: '<div>Hello World</div>'
+        // });
+        // 컴포넌트형
+        // Vue.component('moonsun-button',{
+        //     template: `
+        //     <div>       
+        //         {{ name }} <br>
+        //         <button @click="changeText">Click</button>
+        //         <hello-world></hello-world>
+        //     </div>
+        //     `,
+            // data:{
+            //     name: 'moonsun'
+            // },
+            //오브젝트 생성시 함수로 만듬. 값의 전체 변경을 막기위함
+        //     data(){
+        //         return{
+        //             name: 'moonsun'
+        //         }
+        //     },
+        //     methods:{
+        //         changeText(){
+        //             this.name = 'moonsun updated';
+        //         }
+        //     },
+        // });
+
+
+        //지역변수 컴포넌트
+        const HelloWorld = {
+            template: '<div>hellow world components</div>'
+        };
+
+        const MoonsunButton = {
+            components:{
+                'hello-world': HelloWorld
+            },
+            template: `
+                <div>       
+                    {{ name }} <br>
+                    <button @click="changeText">Click</button>
+                    <hello-world></hello-world>
+                </div>
+            `,
+            data(){
+                return{
+                    name: 'moonsun'
+                }
+            },
+            methods:{
+                changeText(){
+                    this.name = 'moonsun updated';
+                }
+            },
+        };
+
+
+
+        const app = new Vue({
+            el:'#app',
+            //지역변수 컴포넌트
+            components:{
+                'moonsun-button': MoonsunButton,
+            },
+            //기존형
+            // data:{
+            //     name: 'moonsun'
+            // },
+            // methods:{
+            //     changeText(){
+            //         this.name = 'moonsun updated';
+            //     }
+            // },
+        })
+
+
+        const app1 = new Vue({
+            el:'#app-1',
+            components:{
+                'moonsun-button': MoonsunButton,
+            },
+            data:{
+                name: 'moonsun'
+            },
+            methods:{
+                changeText(){
+                    this.name = 'moonsun updated';
+                }
+            },
+        })
+    </script>
+</body>
+</html>

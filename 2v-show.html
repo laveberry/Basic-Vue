@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초익히기2</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .font-bold{
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <template v-if="show">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </template>
+        <div v-if="show">Yes</div>
+        <div v-else>NO</div>
+        <br>
+        <button @click="toggleShow">Toggle</button>
+
+
+        <template v-if="number === 1">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </template>
+        <div v-else-if="number === 2">Hi</div>
+        <div v-else>NO</div>
+        <br>
+        <button @click="increaseNumber">Increase</button> {{ number }}
+
+        <!-- 
+            v-if : 초기값 false이면 아예 렌더링 x, 토글비용 높음, 런타임시 조건이 바뀌지 않을때 사용
+            v-show : false여도 렌더링 진행됨, 초기 렌더링 비용 높음, 자주바꿀때 사용
+         -->
+        <div v-show="show2">Yes</div>
+        <br>
+        <button @click="toggle">Toggle</button>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                show: true,
+                number: 1,
+                show2: false,
+                
+            },
+            methods:{
+                toggleShow(){
+                    this.show = !this.show;
+                },
+                increaseNumber(){
+                    this.number++;
+                },
+                toggle(){
+                    this.show2 = !this.show2;
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>
