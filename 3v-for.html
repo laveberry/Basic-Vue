@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초익히기 : v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            {{ people[0].name }} {{ people[0].age }}
+        </div>
+        <div>
+            {{ people[1].name }} {{ people[1].age }} 
+        </div>
+        <div>
+            {{ people[2].name }} {{ people[2].age }}
+        </div>
+        <div>
+            {{ people[3].name }} {{ people[3].age }}
+        </div>
+
+        <hr>
+
+        <!-- 
+            상단의 길었던 소스 축소
+            in of 둘다 가능, 유니크한 key필요 
+            <div v-for="person in people">
+            :key에 index를 넣어주는건 좋지않음, 값변경 확률 높음 / 보통 id속성 넣어주기
+        -->
+        <div v-for="(person, index) in people" :key="person.name + '-' + person.age">
+            {{ person.name }} {{ person.age }} {{ index }}
+        </div>
+
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                people:[
+                    {name: 'a', age: 20},
+                    {name: 'b', age: 21},
+                    {name: 'c', age: 22},
+                    {name: 'd', age: 23},
+                    {name: 'e', age: 24},
+                    {name: 'e', age: 25},
+                ] 
+            },
+            methods:{
+
+            },
+        })
+    </script>
+</body>
+</html>
