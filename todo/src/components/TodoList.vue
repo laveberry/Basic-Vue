@@ -17,11 +17,19 @@ export default {
     components:{
         Todo
     },
-    props:{
-        todos:{
-            type: Array,
-            required : true
-        }
+    // props:{
+    //     todos:{
+    //         type: Array,
+    //         required : true
+    //     }
+    // },
+
+    computed:{
+      todos(){
+        //   return this.$store.state.todos;
+        // 모듈화 적용 후
+          return this.$store.state.todo.todos;
+      }  
     },
 
     methods:{
@@ -32,7 +40,6 @@ export default {
         deleteTodo(todoId){
             this.$emit('click-delete', todoId)
         }
-
     }
 }
 </script>
